@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      * {
+        user-select: none;
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+        font-family: 'Courier New', Courier, monospace;
+        font-weight: 600;
+        font-size: 20px;
+        line-height: 1.5;
+        letter-spacing: 3px;
+        border-radius: 3px;
+        box-sizing: border-box;
+        text-decoration: none;
+        color: aliceblue;
+      }
+      body {
+        background: rgb(15, 14, 14);
+      }
+      h1 {
+        font-weight: bold;
+        margin: 10px;
+        padding: 10px;
+        color: bisque;
+        border: 1px solid red;
+      }
+      #list {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        width: 600px;
+        margin: auto;
+        padding: 10px;
+      }
+      #list > li {
+        width: inherit;
+      }
+      .list-item {
+        border-bottom: 1px solid red;
+        padding: 10px 40px 0 40px;
+        cursor: pointer;
+        transition-duration: 0.5s;
+      }
+      .list-item:hover {
+        margin-left: -50px;
+        color: burlywood;
+      }
+      .list-item:active {
+        color: red;
+        border-color: burlywood;
+      }
+      .nav:hover {
+        color: brown;
+        margin-left: 0;
+      }
+      .posts_ul {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        cursor: auto;
+        margin-left: 50px;
+        border-left: 1px solid red;
+        height: 250px;
+        overflow: auto;
+      }
+      .posts_ul > h2 {
+        margin: 10px 0;
+        color: bisque;
+      }
+      .posts_ul:hover {
+        margin-left: 50px;
+      }
+      ::-webkit-scrollbar {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: red;
+      }
+    </style>
+    <title>Posts</title>
+  </head>
+  <body>
+    <h1 align="center"
+      ><a href="/users" class="nav list-item">Users</a> |
+      <a href="/posts" class="nav list-item">Posts</a> |
+      <a href="/profile" class="nav list-item">Profile</a>
+    </h1>
+    <ul id="list"> </ul>
+    <script>
+      let USER_SEARCH = localStorage.getItem('user_search') || false
+      ;(async () => {
+        let POSTS = await fetch('http://localhost:4000/api/posts')
+        let data = await fetch('http://localhost:4000/api/users')
+        data = await data.json()
+        POSTS = await POSTS.json()
+
+        if (!data) return alert('User not Fount')
+
+        let list = document.querySelector('#list')
+        list.innerHTML = null
+
+        if (USER_SEARCH) {
+          if (!data[USER_SEARCH]) {
+            alert('User topilmadi')
+            location.replace('/users')
+          }
+
+          data = {
+            [USER_SEARCH]: data[USER_SEARCH],
+          }
+          localStorage.removeItem('user_search')
+        }
+
+        for (const id in data) {
+          if (Object.hasOwnProperty.call(data, id)) {
+            const obj = data[id]
+
+            if (!obj['username']) continue
+
+            let li = document.createElement('li')
+            let a = document.createElement('a')
+
+            let ul = document.createElement('ul')
+            // render posts
+            if (POSTS) {
+              POSTS[id]?.forEach(obj => {
+                let { date_time, title, body } = obj
+                let h2 = document.createElement('h2')
+                let span = document.createElement('span')
+                let p = document.createElement('p')
+                let li = document.createElement('li')
+
+                li.classList.add('list-item')
+                li.classList.add('posts_ul')
+
+                h2.innerText = title
+                span.innerText = date_time
+                p.innerText = body
+
+                li.append(h2, p, span)
+                ul.append(li)
+              })
+            }
+
+            a.className = 'list-item'
+            a.innerText = obj['username']
+            li.append(a, ul)
+            list.append(li)
+          }
+        }
+      })()
+    </script>
+  </body>
+</html>

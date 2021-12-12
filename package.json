@@ -1,0 +1,16 @@
+{
+  "name": "Users_Posts_login",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app"
+  },
+  "keywords": [
+    "Users",
+    "Posts",
+    "Login"
+  ],
+  "author": "Jasurbek-Zaripov",
+  "license": "MIT"
+}

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        border-radius: 3px;
+        font-family: 'Courier New', Courier, monospace;
+        font-weight: 600;
+        font-size: 20px;
+        outline: none;
+        color: rgb(155, 2, 2);
+      }
+      body {
+        background: rgb(10, 10, 10);
+      }
+      #form {
+        width: 300px;
+        margin: 15% auto 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        box-shadow: 0 0 5px 2px black;
+        padding: 20px;
+      }
+      input {
+        padding: 5px;
+        margin: 10px;
+      }
+      button {
+        cursor: pointer;
+        background: rgb(111, 0, 0);
+        color: black;
+        border: 1px solid red;
+        margin: 5px;
+        padding: 5px;
+        transition-duration: 0.4s;
+      }
+      button:hover {
+        margin: 10px 0 0 10px;
+        box-shadow: -10px -10px 5px 2px black;
+      }
+      button:active {
+        margin: 5px 0 0 5px;
+        box-shadow: -5px -5px 5px 2px black;
+      }
+    </style>
+    <title>Sign up</title>
+  </head>
+  <body>
+    <div id="form">
+      <label for="user">Username:</label>
+      <input type="text" name="user" id="user" required />
+      <label for="pass">Password</label>
+      <input type="password" name="pass" required />
+      <button>Sign up</button>
+    </div>
+    <script>
+      let div_btn = document.querySelector('#form > button')
+      let inp_user = document.querySelector('#user')
+
+      div_btn.onclick = async () => {
+        let username = inp_user.value
+
+        let data = await fetch('/api/users/create', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(
+            {
+              username,
+            },
+            null,
+            2
+          ),
+        })
+
+        data = await data.json()
+        if (!data['yourID']) {
+          return alert(data['Error'])
+        }
+        alert(`YOUR ID: ${data['yourID']}`)
+        localStorage.setItem('myId', JSON.stringify(data, null, 2))
+        location.replace('/')
+      }
+    </script>
+  </body>
+</html>

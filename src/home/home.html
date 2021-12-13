@@ -114,6 +114,10 @@
       <p class="text-footer"> Copyright ©-All rights are reserved </p>
     </footer>
     <script>
+      let image = document.querySelector('img')
+      image.onclick = () => {
+        location.replace('/profile')
+      }
       if (!localStorage.getItem('myId')) {
         location.replace('/login')
       } else {

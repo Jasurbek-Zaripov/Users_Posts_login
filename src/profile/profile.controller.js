@@ -6,7 +6,7 @@ module.exports = async function (rq, rs) {
     // GET profile html
     if (rq.url == '/profile') {
       rs.setHeader('content-type', 'text/html')
-      let A_A = await profile
+      let A_A = await profile()
       return rs.end(A_A)
     }
   }

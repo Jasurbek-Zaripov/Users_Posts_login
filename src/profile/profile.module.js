@@ -5,5 +5,6 @@ let root = path.resolve()
 //export profile
 module.exports = {
   //read profile html
-  profile: fs.readFile(path.join(root, 'src', 'profile', 'profile.html'), 'utf-8'),
+  profile: async () =>
+    fs.readFile(path.join(root, 'src', 'profile', 'profile.html'), 'utf-8'),
 }

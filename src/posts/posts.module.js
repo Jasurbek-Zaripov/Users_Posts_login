@@ -5,10 +5,10 @@ let root = path.resolve()
 //export
 module.exports = {
   //read post html
-  posts: fs.readFile(path.join(root, 'src', 'posts', 'posts.html'), 'utf-8'),
+  posts: async () => fs.readFile(path.join(root, 'src', 'posts', 'posts.html'), 'utf-8'),
 
   //read post database
-  posts_db: fs.readFile(path.join(root, 'db', 'posts.json'), 'utf-8'),
+  posts_db: async () => fs.readFile(path.join(root, 'db', 'posts.json'), 'utf-8'),
 
   //write post database
   posts_write: async (rq, rs) => {

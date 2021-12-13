@@ -8,7 +8,7 @@ module.exports = async function (rq, rs) {
     if (rq.url == '/posts') {
       rs.setHeader('content-type', 'text/html')
       //post html
-      let A_A = await posts
+      let A_A = await posts()
       return rs.end(A_A)
 
       //GET JSON database
@@ -16,7 +16,7 @@ module.exports = async function (rq, rs) {
       rs.setHeader('content-type', 'application/json')
 
       //posts database
-      let A_A = await posts_db
+      let A_A = await posts_db()
       return rs.end(A_A)
     }
 

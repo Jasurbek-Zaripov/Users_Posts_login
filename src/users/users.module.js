@@ -5,10 +5,10 @@ let root = path.resolve()
 //export object
 module.exports = {
   //read user html
-  users: fs.readFile(path.join(root, 'src', 'users', 'users.html'), 'utf-8'),
+  users: async () => fs.readFile(path.join(root, 'src', 'users', 'users.html'), 'utf-8'),
 
   //read user database
-  users_db: fs.readFile(path.join(root, 'db', 'users.json'), 'utf-8'),
+  users_db: async () => fs.readFile(path.join(root, 'db', 'users.json'), 'utf-8'),
 
   //write new user to users database
   users_create: async (rq, rs) => {

@@ -6,13 +6,13 @@ module.exports = async function (rq, rs) {
     //users html
     if (rq.url == '/users') {
       rs.setHeader('content-type', 'text/html')
-      let A_A = await users
+      let A_A = await users()
       return rs.end(A_A)
 
       //GET users database
     } else if (rq.url == '/api/users') {
       rs.setHeader('content-type', 'text/html')
-      let A_A = await users_db
+      let A_A = await users_db()
       return rs.end(A_A)
     }
 

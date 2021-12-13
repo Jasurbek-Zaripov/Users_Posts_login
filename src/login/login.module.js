@@ -5,5 +5,5 @@ let root = path.resolve()
 //export login
 module.exports = {
   //read login html
-  login: fs.readFile(path.join(root, 'src', 'login', 'login.html'), 'utf-8'),
+  login: async () => fs.readFile(path.join(root, 'src', 'login', 'login.html'), 'utf-8'),
 }

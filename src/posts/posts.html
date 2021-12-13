@@ -95,10 +95,11 @@
     </h1>
     <ul id="list"> </ul>
     <script>
+      let localhost = '192.168.1.42'
       let USER_SEARCH = localStorage.getItem('user_search') || false
       ;(async () => {
-        let POSTS = await fetch('http://localhost:4000/api/posts')
-        let data = await fetch('http://localhost:4000/api/users')
+        let POSTS = await fetch(`http://${localhost}:4000/api/posts`)
+        let data = await fetch(`http://${localhost}:4000/api/users`)
         data = await data.json()
         POSTS = await POSTS.json()
 
